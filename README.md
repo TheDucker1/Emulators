@@ -1,6 +1,8 @@
 # Emulators
 
-My try on recreate some emulator with C
+Creating some emulator with C
+
+Credits are listed in files (if had)
 
 In Progress:
 ```
