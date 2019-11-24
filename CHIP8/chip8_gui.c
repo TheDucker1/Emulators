@@ -1,3 +1,29 @@
+/*****************************************************
+chip8.h: GUI for chip8.c
+Author: TheDucker1
+GUI Toolkit: GTK+ 2.0
+100% Playable Games:
+-GUESS
+-KALEID
+-MAZE
+-MERLIN
+-MISSLE
+-TETRIS
+-TICTAC
+Playable, but still have many bugs:
+-BRIX
+-VBRIX
+Can't play / load:
+-BLINKY
+-BLITZ
+-INVADERS
+-PONG
+-PONG2
+-SYZYGY
+-UFO
+-WIPEOFF
+*****************************************************/
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
