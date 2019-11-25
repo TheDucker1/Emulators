@@ -1,16 +1,18 @@
 # Emulators
 
-Creating some emulator with C
+Creating some emulator using C
 
 Credits are listed in files (if had)
 
 In Progress:
 ```
-CHIP-8 interpreter (yes I know this is an interpreter)
+Modern CHIP-8
+SCHIP
 ```
 
 Finished:
 ```
+CHIP-8
 ```
 
 Todo List:

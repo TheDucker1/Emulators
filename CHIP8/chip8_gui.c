@@ -2,26 +2,7 @@
 chip8.h: GUI for chip8.c
 Author: TheDucker1
 GUI Toolkit: GTK+ 2.0
-100% Playable Games:
--GUESS
--KALEID
--MAZE
--MERLIN
--MISSLE
--TETRIS
--TICTAC
-Playable, but still have many bugs:
--BRIX
--VBRIX
-Can't play / load:
 -BLINKY
--BLITZ
--INVADERS
--PONG
--PONG2
--SYZYGY
--UFO
--WIPEOFF
 *****************************************************/
 
 #include<stdio.h>
@@ -93,19 +74,69 @@ static gboolean key_pressed(GtkWidget* widget, GdkEventKey *event, void ** data)
   return FALSE;
 }
 
-/*
-static gboolean key_released(GtkWidget* widget, GdkEventKey *event) {
+
+static gboolean key_released(GtkWidget* widget, GdkEventKey *event, void ** data) {
+  CHIP8* ref = data[1];
   if ((event->keyval & 0xFF00) >> 8 != 0xFF) {
+    switch (event->keyval) {
+      case 'x': ref->key[0x0] = 0;
+      break;
+      
+      case '1': ref->key[0x1] = 0;
+      break;
+      
+      case '2': ref->key[0x2] = 0;
+      break;
+      
+      case '3': ref->key[0x3] = 0;
+      break;
+      
+      case 'q': ref->key[0x4] = 0;
+      break;
+      
+      case 'w': ref->key[0x5] = 0;
+      break;
+      
+      case 'e': ref->key[0x6] = 0;
+      break;
+      
+      case 'a': ref->key[0x7] = 0;
+      break;
+      
+      case 's': ref->key[0x8] = 0;
+      break;
+      
+      case 'd': ref->key[0x9] = 0;
+      break;
+      
+      case 'z': ref->key[0xA] = 0;
+      break;
+      
+      case 'c': ref->key[0xB] = 0;
+      break;
+      
+      case '4': ref->key[0xC] = 0;
+      break;
+      
+      case 'r': ref->key[0xD] = 0;
+      break;
+      
+      case 'f': ref->key[0xE] = 0;
+      break;
+      
+      case 'v': ref->key[0xF] = 0;
+      break;      
+    }
     return TRUE;
   }
   return FALSE;
-} unused, for now
-*/
+}
+
 
 static gboolean update(void ** data) {
   GtkWidget *widget = data[0];
   CHIP8* ref = data[1];
-  //printf("OPCODE: %04x\tPC: %x\tI: %x\n", ref->opcode, ref->pc, ref->I);
+  //printf("OPCODE: %04x\tPC: %x\tI: %x\n", ref->opcode, ref->pc, ref->I); //debug
   if (widget->window == NULL) return FALSE;
   //run a cycle
   ref->emulateCycle(ref);
@@ -173,10 +204,10 @@ int main(int argc, char * argv[]) {
 
   g_signal_connect(G_OBJECT(window), "key_press_event",
               G_CALLBACK(key_pressed), callback_data);
+  g_signal_connect(G_OBJECT(window), "key_release_event",
+              G_CALLBACK(key_released), callback_data);
   g_signal_connect(dArea, "expose-event",
               G_CALLBACK(draw), callback_data);
-  /* g_signal_connect(G_OBJECT(window), "key_release_event",
-              G_CALLBACK(key_released), NULL); */
   g_timeout_add(UPDATE_TIME, update, callback_data);
   g_signal_connect(G_OBJECT(window), "destroy",
               G_CALLBACK(gtk_main_quit), NULL);
