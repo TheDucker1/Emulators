@@ -107,7 +107,7 @@ void CHIP8_loadGame(CHIP8* self, const char * path) {
   char * buffer;
   size_t size;
 
-  ptr_input_file = fopen(path, "rb");	
+  ptr_input_file = fopen(path, "rb");
   if (ptr_input_file == NULL) {fputs("File error: Input file doesn't exist\n", stderr); exit (1);}
   fseek(ptr_input_file, 0, SEEK_END);
   lSize = ftell(ptr_input_file);
@@ -118,7 +118,7 @@ void CHIP8_loadGame(CHIP8* self, const char * path) {
 
   size = fread(buffer, 1, lSize, ptr_input_file);
   if (size != lSize) {fputs("Reading error", stderr); exit(3);}
-  
+
   for (unsigned int i = 0; i < size; ++i) {
     self->memory[i + 0x200] = buffer[i];
   }
@@ -271,13 +271,11 @@ void CHIP8_draw(CHIP8* self) { //DXYN
   for (unsigned char y = 0; y < (self->opcode & 0x000F); ++y) {
     pixel = self->memory[self->I + y];
     for (unsigned char x = 0; x < 8; ++x) {
-      if ((self->V[((self->opcode & 0x0F00) >> 8)] + x + ((self->V[((self->opcode & 0x00F0) >> 4)] + y) * 64)) < 64 * 32) {
-        if ((pixel & (0x80 >> x)) != 0) { //might be collision here || ex: pixel = 10010000, x = 3 (binary) --> 0x80 >> x = 00010000 --> pixel & (0x80 >> x) = 1 --> collision
-          if (self->gfx[self->V[((self->opcode & 0x0F00) >> 8)] + x + ((self->V[((self->opcode & 0x00F0) >> 4)] + y) * 64)] == 1) {
-            self->V[0xF] = 1;
-          }
-          self->gfx[self->V[((self->opcode & 0x0F00) >> 8)] + x + ((self->V[((self->opcode & 0x00F0) >> 4)] + y) * 64)] ^= 1;
+      if ((pixel & (0x80 >> x)) != 0) { //might be collision here || ex: pixel = 10010000, x = 3 (binary) --> 0x80 >> x = 00010000 --> pixel & (0x80 >> x) = 1 --> collision
+        if (self->gfx[(self->V[((self->opcode & 0x0F00) >> 8)] + x + ((self->V[((self->opcode & 0x00F0) >> 4)] + y) * 64)) % (32 * 64)] == 1) {
+          self->V[0xF] = 1;
         }
+        self->gfx[(self->V[((self->opcode & 0x0F00) >> 8)] + x + ((self->V[((self->opcode & 0x00F0) >> 4)] + y) * 64)) % (32 * 64)] ^= 1;
       }
     }
   }
