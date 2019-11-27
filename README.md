@@ -6,7 +6,6 @@ Credits are listed in files (if had)
 
 In Progress:
 ```
-Modern CHIP-8
 SCHIP
 ```
 
