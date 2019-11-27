@@ -6,7 +6,7 @@ Credits are listed in files (if had)
 
 In Progress:
 ```
-SCHIP
+GB
 ```
 
 Finished:
